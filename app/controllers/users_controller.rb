@@ -1,17 +1,8 @@
-class MoviesController < ApplicationController
+class UsersController < ApplicationController
 
-  def movie_params
-    params.require(:movie).permit(:title, :rating, :description, :release_date)
-  end
-
-  def show
-    id = params[:id] # retrieve movie ID from URI route
-    @movie = Movie.find(id) # look up movie by unique ID
-    # will render app/views/movies/show.<extension> by default
-  end
-
-  def index
-    @movies = Movie.all
+  def user_params
+    params.require(:user).permit(:user_id,:email)
+    
   end
 
   def new
@@ -19,27 +10,22 @@ class MoviesController < ApplicationController
   end
 
   def create
-    @movie = Movie.create!(movie_params)
-    flash[:notice] = "#{@movie.title} was successfully created."
-    redirect_to movies_path
-  end
-
-  def edit
-    @movie = Movie.find params[:id]
-  end
-
-  def update
-    @movie = Movie.find params[:id]
-    @movie.update_attributes!(movie_params)
-    flash[:notice] = "#{@movie.title} was successfully updated."
-    redirect_to movie_path(@movie)
-  end
-
-  def destroy
-    @movie = Movie.find(params[:id])
-    @movie.destroy
-    flash[:notice] = "Movie '#{@movie.title}' deleted."
-    redirect_to movies_path
+   begin
+    @user = User.create_user!(user_params)
+    @validUser = true
+    rescue ActiveRecord::RecordInvalid => e
+    if e.message == 'Validation failed: User has already been taken'
+       flash[:notice] = "Sorry, this user-id is taken. Try again."
+       @validUser = false
+       redirect_to new_user_path
+       return
+    end
+   
+   end
+   if(@validUser)
+    flash[:notice] = "Welcome #{@user.user_id}. Your account has been created"
+   end
+    redirect_to login_path
   end
 
 end
