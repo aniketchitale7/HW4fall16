@@ -15,8 +15,8 @@ class SessionsController < ApplicationController
     print("Value of U is  #{u}")
    if u != nil
      if u.email == params[:user][:email]
-       #flash[:notice] = "You are Logged in as #{u.user_id}"
        session[:session_token] = u.session_token
+       session[:notice] = "You are Logged in as #{u.user_id}"
        redirect_to movies_path
        return
    else
