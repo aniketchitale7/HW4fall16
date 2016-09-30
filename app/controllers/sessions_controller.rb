@@ -20,13 +20,13 @@ class SessionsController < ApplicationController
        redirect_to movies_path
        return
    else
-        flash[:notice] = "Invalid user-id/email combination."
+        flash[:notice] = "Invalid user-id/e-mail combination."
         redirect_to login_path
         return
         
      end
    else
-      flash[:notice] = "Invalid user-id/email combination."
+      flash[:notice] = "Invalid user-id/e-mail combination."
       redirect_to login_path
    end
   end
