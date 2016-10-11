@@ -13,9 +13,9 @@
         =button_to 'Sign Up/Login', login_path , method: 'get', :id => 'signuplogin'
       - else
         =button_to 'Logout', logout_path , method: 'delete' , :id => 'logout'
-        #notice.message= session[:notice]
+        #notice.flash_message= session[:notice]
       - if flash[:notice]
-        #notice.message= flash[:notice]
+        #notice.flash_message= flash[:notice]
       - elsif flash[:warning]
-        #warning.message= flash[:warning]
+        #warning.flash_message= flash[:warning]
       = yield
